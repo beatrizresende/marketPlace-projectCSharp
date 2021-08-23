@@ -18,6 +18,7 @@ namespace ProjectCSharp
             Seller newSeller = new Seller();
             newSeller.DeliveryAddress = new Address();
             Address deliveryAddress = newSeller.DeliveryAddress;
+            newSeller.BillingAddress = new Address();
             Address billingAddress = newSeller.BillingAddress;
 
             newSeller.Id = Sellers.Count + 1;
@@ -27,10 +28,11 @@ namespace ProjectCSharp
             newSeller.Name = response;
             Console.WriteLine("O endereço de recebimento/envio de mercadorias é o mesmo de cobrança? (S/N)");
             response = Console.ReadLine();
-            do 
+            while (response.ToUpper() != "S" && response.ToUpper() != "N") 
             {
-               Console.WriteLine("Digite S (sim) ou N (não)"); 
-            } while (response.ToUpper() != "S" || response.ToUpper() != "N");
+               Console.WriteLine("Digite S (sim) ou N (não)");
+               response = Console.ReadLine();
+            };
 
             if (response.ToUpper() == "S") {
                 Console.WriteLine("Digite o seu endereço:");
@@ -44,14 +46,15 @@ namespace ProjectCSharp
                 billingAddress.SecondAddress = response;
                 Console.WriteLine("Número:");
                 int number;
-                var tryParse = Int32.TryParse(Console.ReadLine(), out number);
-                do 
+                bool tryParse = Int32.TryParse(Console.ReadLine(), out number);
+                while (!tryParse)
                 {
-                    Console.WriteLine("Formato inválido, coloque só números"); 
-                } while (!tryParse);
+                    Console.WriteLine("Formato inválido, coloque só números");
+                    tryParse = Int32.TryParse(Console.ReadLine(), out number); 
+                };
                 deliveryAddress.Number = number;
                 billingAddress.Number = number;
-                Console.WriteLine("CPF/CNPJ:");
+                Console.WriteLine("CEP:");
                 response = Console.ReadLine();
                 deliveryAddress.ZipCode = response;
                 billingAddress.ZipCode = response;
@@ -78,13 +81,14 @@ namespace ProjectCSharp
                 deliveryAddress.SecondAddress = response;
                 Console.WriteLine("Número:");
                 int number;
-                var tryParse = Int32.TryParse(Console.ReadLine(), out number);
-                do 
+                bool tryParse = Int32.TryParse(Console.ReadLine(), out number);
+                while (!tryParse)
                 {
                     Console.WriteLine("Formato inválido, coloque só números"); 
-                } while (!tryParse);
+                    tryParse = Int32.TryParse(Console.ReadLine(), out number);
+                };
                 deliveryAddress.Number = number;
-                Console.WriteLine("CPF:");
+                Console.WriteLine("CEP:");
                 response = Console.ReadLine();
                 deliveryAddress.ZipCode = response;
                 Console.WriteLine("Cidade:");
@@ -105,14 +109,14 @@ namespace ProjectCSharp
                 response = Console.ReadLine();
                 billingAddress.SecondAddress = response;
                 Console.WriteLine("Número:");
-                int numberBilling;
-                var tryParseBilling = Int32.TryParse(Console.ReadLine(), out numberBilling);
-                do 
+                tryParse = Int32.TryParse(Console.ReadLine(), out number);
+                while (!tryParse)
                 {
                     Console.WriteLine("Formato inválido, coloque só números"); 
-                } while (!tryParseBilling);
-                billingAddress.Number = numberBilling;
-                Console.WriteLine("CPF:");
+                    tryParse = Int32.TryParse(Console.ReadLine(), out number);
+                };
+                billingAddress.Number = number;
+                Console.WriteLine("CEP:");
                 response = Console.ReadLine();
                 billingAddress.ZipCode = response;
                 Console.WriteLine("Cidade:");
@@ -132,18 +136,38 @@ namespace ProjectCSharp
             Console.WriteLine("Digite a sua senha:");
             response = Console.ReadLine();
             newSeller.Password = response;
-            Console.WriteLine("Digite a sua data de nascimento ou data de criação da empresa:");
+            Console.WriteLine("Digite a sua data de nascimento ou data de criação da empresa (ex.: 08/04/2003):");
             response = Console.ReadLine();
+            bool tryParseDateTime;
             DateTime birthDate;
-            var tryParseDateTime = DateTime.TryParseExact(response, "d/M/yyyy", new CultureInfo("pt-BR"), DateTimeStyles.None, out birthDate);
+            // do
+            // {
+                tryParseDateTime = DateTime.TryParseExact(response, "d/M/yyyy", new CultureInfo("pt-BR"), DateTimeStyles.None, out birthDate);
+            //     if (!tryParseDateTime) Console.WriteLine("Insira uma data válida no formato d/M/yyyy");
+            // } while (!tryParseDateTime);
             newSeller.BirthDate = birthDate;
             
             Sellers.Add(newSeller);
+            Console.WriteLine("PERFIL CRIADO! Seus dados são: ");
+            Console.WriteLine(newSeller);
+            Console.WriteLine("Deseja mudar alguma informação? (S/N)");
+            response = Console.ReadLine();
+            while (response.ToUpper() != "S" && response.ToUpper() != "N") 
+            {
+               Console.WriteLine("Digite S (sim) ou N (não)");
+               response = Console.ReadLine();
+            };
+            // if (response.ToUpper() == "S") ChangeDataClient(this);
+            // else 
+            // {
+            //     Console.WriteLine("O que deseja fazer agora?");
+            //     ProjectCSharp.Menu.GeneralMenuOption();
+            // }
         }
 
         public override string ToString()
         {
-            return $"{this.Name} - ID: {this.Id}";
+            return $"Nome: {this.Name} - ID: {this.Id} - Endereço de recebimento: {this.DeliveryAddress} - Endereço de cobrança: {this.BillingAddress} - Nome de usuário: {this.Username} - Senha: {this.Password} - Data de nascimento: {this.BirthDate}";
         }
     }
 }

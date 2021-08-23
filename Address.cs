@@ -17,5 +17,10 @@ namespace ProjectCSharp
         public string State { get; set; }
 
         public string Country { get; set; }
+
+        public override string ToString()
+        {
+            return $"{this.FirstAddress}, {this.SecondAddress}, {this.Number}, {this.ZipCode}, {this.City}, {this.State}, {this.Country}";
+        }
     }
 }
