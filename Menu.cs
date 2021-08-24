@@ -17,6 +17,7 @@ namespace ProjectCSharp
             Console.WriteLine("Digite o número da opção desejada");
             Console.WriteLine("1 - Cadastrar novo vendedor");
             Console.WriteLine("2 - Cadastrar novo cliente");
+            Console.WriteLine("3 - Cadastrar novo produto");
             Console.WriteLine("3 - Buscar vendedor");
             Console.WriteLine("4 - Buscar cliente");
             Console.WriteLine("5 - Atualizar dados vendedor");
@@ -33,10 +34,10 @@ namespace ProjectCSharp
         public static void Option(int _option) {
             switch(_option) {
                 case 1:
-                ProjectCSharp.Seller.CreateSeller();
+                ProjectCSharp.CreateSeller.Create();
                 break;
                 case 2:
-                ProjectCSharp.Client.CreateClient();
+                ProjectCSharp.CreateClient.Create();
                 break;
                 case 3:
                 //ProjectCSharp.Seller.SearchSeller();

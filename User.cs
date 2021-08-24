@@ -1,19 +1,11 @@
 using System;
+using System.Security;
 
 namespace ProjectCSharp
 {
-    public class User
+    public abstract class User
     {
-        // public User(int id, string name, Address deliveryAddress, Address billingAddress, string username, string password, DateTime birthDate)
-        // {
-        //     Id = id;
-        //     Name = name;
-        //     DeliveryAddress = deliveryAddress;
-        //     BillingAddress = billingAddress;
-        //     Username = username;
-        //     Password = password;
-        //     BirthDate = birthDate;
-        // }
+        //repensar modificadores de acesso
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -26,9 +18,7 @@ namespace ProjectCSharp
 
         public string Password { get; set; }
 
-        public DateTime BirthDate { get; set; }
-
-        
+        public DateTime BirthDate { get; set; } 
 
     }
 }
